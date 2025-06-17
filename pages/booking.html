@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking - Los Santos International Airport</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/booking.css">
+</head>
+<body>
+    <header>
+        <img src="../assets/logo.svg" alt="LSIA Logo" class="logo">
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="destinations.html">Destinations</a></li>
+                <li><a href="booking.html">Booking</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Book Your Flight</h1>
+        <form id="booking-form">
+            <label for="destination">Select Destination:</label>
+            <select id="destination" name="destination" required>
+                <option value="">--Choose a destination--</option>
+                <option value="Los Santos">Los Santos</option>
+                <option value="Liberty City">Liberty City</option>
+                <option value="Vice City">Vice City</option>
+                <option value="San Fierro">San Fierro</option>
+            </select>
+
+            <label for="date">Select Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="passengers">Number of Passengers:</label>
+            <input type="number" id="passengers" name="passengers" min="1" required>
+
+            <button type="submit">Book Now</button>
+        </form>
+        <div id="confirmation" class="hidden">
+            <h2>Booking Confirmation</h2>
+            <p>Your flight has been booked successfully!</p>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2023 Los Santos International Airport. All rights reserved.</p>
+    </footer>
+    <script src="../js/main.js"></script>
+    <script src="../js/booking.js"></script>
+</body>
+</html>
