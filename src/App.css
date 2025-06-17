@@ -1,0 +1,192 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f4f9;
+  color: #333;
+}
+
+.navbar {
+  background: #003366;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.hero {
+  background: url('https://tse3.mm.bing.net/th?id=OIP.dtLVf364c5pbsnc8fVL9oQHaJQ&pid=Api') center/cover no-repeat;
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+  background-blend-mode: darken;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.hero h2 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+section {
+  padding: 2rem;
+}
+
+h2 {
+  color: #003366;
+  margin-bottom: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+  background: #f9f9f9;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.07);
+  text-align: center;
+}
+
+.card button {
+  margin-top: 1rem;
+  background: #0055aa;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.card button:hover {
+  background: #003f7a;
+}
+
+footer {
+  background: #003366;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+.flight-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.flight-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.flight-card:hover {
+  transform: translateY(-2px);
+}
+
+.flight-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flight-icon {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  color: #0055aa;
+}
+
+.flight-info {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.flight-time {
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+.status {
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  text-align: center;
+  min-width: 80px;
+}
+
+.status.on-time {
+  background: #d4f4dd;
+  color: #228b22;
+}
+
+.status.delayed {
+  background: #ffe0e0;
+  color: #cc0000;
+}
+
+.status.boarding {
+  background: #fff5d1;
+  color: #aa8800;
+}
+
+.status.landed {
+  background: #e6f3ff;
+  color: #0055aa;
+}
+
+.expand-icon {
+  font-size: 1rem;
+  margin-left: 0.5rem;
+}
+
+.flight-details {
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #eee;
+  color: #555;
+  font-size: 0.95rem;
+}
