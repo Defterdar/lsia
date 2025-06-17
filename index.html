@@ -145,18 +145,65 @@
                     </div>
                 </div>
 
+                <!-- Travel Type: One-way or Round-trip -->
+                <div class="col-span-full">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Travel Type:</label>
+                    <div class="flex items-center space-x-4">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="travel-type" value="one-way" class="form-radio text-blue-600" checked>
+                            <span class="ml-2 text-gray-700">One-way</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="travel-type" value="round-trip" class="form-radio text-blue-600">
+                            <span class="ml-2 text-gray-700">Round-trip</span>
+                        </label>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label for="departure-date" class="block text-gray-700 text-sm font-bold mb-2">Departure Date:</label>
                         <input type="date" id="departure-date" name="departure-date" required
                             class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
+                    <div id="return-date-container" class="hidden">
+                        <label for="return-date" class="block text-gray-700 text-sm font-bold mb-2">Return Date:</label>
+                        <input type="date" id="return-date" name="return-date"
+                            class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label for="passengers" class="block text-gray-700 text-sm font-bold mb-2">Passengers:</label>
                         <input type="number" id="passengers" name="passengers" min="1" value="1" required
                             class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
+                    <div>
+                        <label for="travel-class" class="block text-gray-700 text-sm font-bold mb-2">Travel Class:</label>
+                        <select id="travel-class" name="travel-class" required
+                            class="shadow border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <option value="Economy">Economy</option>
+                            <option value="Business">Business</option>
+                            <option value="First Class">First Class</option>
+                        </select>
+                    </div>
                 </div>
+
+                <!-- Passenger Details -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="full-name" class="block text-gray-700 text-sm font-bold mb-2">Full Name:</label>
+                        <input type="text" id="full-name" name="full-name" placeholder="John Doe" required
+                            class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email Address:</label>
+                        <input type="email" id="email" name="email" placeholder="john.doe@example.com" required
+                            class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                </div>
+
 
                 <div class="flex items-center justify-end">
                     <button type="submit"
@@ -302,34 +349,76 @@
             });
         });
 
+        // Get elements for the booking form to toggle return date
+        const travelTypeRadios = document.querySelectorAll('input[name="travel-type"]');
+        const returnDateContainer = document.getElementById('return-date-container');
+        const returnDateInput = document.getElementById('return-date');
+
+        // Function to toggle return date visibility and required attribute
+        function toggleReturnDate() {
+            if (document.querySelector('input[name="travel-type"]:checked').value === 'round-trip') {
+                returnDateContainer.classList.remove('hidden');
+                returnDateInput.setAttribute('required', 'required');
+            } else {
+                returnDateContainer.classList.add('hidden');
+                returnDateInput.removeAttribute('required');
+                returnDateInput.value = ''; // Clear the return date if switching to one-way
+            }
+        }
+
+        // Add event listeners to travel type radios
+        travelTypeRadios.forEach(radio => {
+            radio.addEventListener('change', toggleReturnDate);
+        });
+
+
         // Handle the booking form submission
         document.getElementById('booking-form').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent default form submission
 
             const destination = document.getElementById('destination').value;
+            const travelType = document.querySelector('input[name="travel-type"]:checked').value;
             const departureDate = document.getElementById('departure-date').value;
+            const returnDate = document.getElementById('return-date').value;
             const passengers = document.getElementById('passengers').value;
+            const travelClass = document.getElementById('travel-class').value;
+            const fullName = document.getElementById('full-name').value;
+            const email = document.getElementById('email').value;
             const bookingMessageDiv = document.getElementById('booking-message');
 
-            if (!destination || !departureDate || !passengers) {
+            // Basic validation
+            if (!destination || !departureDate || !passengers || !fullName || !email) {
                 bookingMessageDiv.className = 'mt-4 p-4 rounded-lg text-center bg-red-100 text-red-700 block';
-                bookingMessageDiv.textContent = 'Please fill in all booking details.';
+                bookingMessageDiv.textContent = 'Please fill in all required booking details.';
+                return;
+            }
+
+            if (travelType === 'round-trip' && !returnDate) {
+                 bookingMessageDiv.className = 'mt-4 p-4 rounded-lg text-center bg-red-100 text-red-700 block';
+                bookingMessageDiv.textContent = 'Please select a return date for round-trip flights.';
                 return;
             }
 
             // Simulate booking confirmation
             bookingMessageDiv.className = 'mt-4 p-4 rounded-lg text-center bg-green-100 text-green-700 block';
             bookingMessageDiv.innerHTML = `
-                <p class="font-bold">Booking Confirmed!</p>
-                <p>Thank you for choosing LSIA.</p>
-                <p>Destination: <span class="font-semibold">${destination}</span></p>
-                <p>Departure Date: <span class="font-semibold">${departureDate}</span></p>
-                <p>Passengers: <span class="font-semibold">${passengers}</span></p>
-                <p class="text-sm mt-2 text-gray-600">Please note: This is a fictional booking and no actual tickets have been issued.</p>
+                <p class="font-bold text-xl">Booking Confirmed!</p>
+                <p class="mt-2">Thank you for choosing LSIA, <span class="font-semibold">${fullName}</span>!</p>
+                <p>Your booking details have been sent to <span class="font-semibold">${email}</span>.</p>
+                <div class="mt-4 text-left inline-block">
+                    <p><strong>Route:</strong> Los Santos (LSIA) to ${destination}</p>
+                    <p><strong>Travel Type:</strong> ${travelType === 'one-way' ? 'One-way' : 'Round-trip'}</p>
+                    <p><strong>Departure Date:</strong> ${departureDate}</p>
+                    ${travelType === 'round-trip' ? `<p><strong>Return Date:</strong> ${returnDate}</p>` : ''}
+                    <p><strong>Passengers:</strong> ${passengers}</p>
+                    <p><strong>Travel Class:</strong> ${travelClass}</p>
+                </div>
+                <p class="text-sm mt-4 text-gray-600">Please note: This is a fictional booking and no actual tickets have been issued.</p>
             `;
 
             // Optionally clear the form after "booking"
             this.reset();
+            toggleReturnDate(); // Reset return date visibility as well
         });
 
         // Initialize the page on load
@@ -339,6 +428,9 @@
 
             // Show flight-info section by default
             showSection('flight-info');
+
+            // Initialize return date visibility based on default radio button
+            toggleReturnDate();
         });
     </script>
 </body>
