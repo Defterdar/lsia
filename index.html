@@ -1,1 +1,314 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><link rel="icon" href="/lsia/favicon.ico"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#000000"/><meta name="description" content="Web site created using create-react-app"/><link rel="apple-touch-icon" href="/lsia/logo192.png"/><link rel="manifest" href="/lsia/manifest.json"/><title>React App</title><script defer="defer" src="/lsia/static/js/main.93a5f50a.js"></script><link href="/lsia/static/css/main.a9ee492f.css" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Los Santos International Airport (LSIA)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for Inter font and general aesthetics */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Light gray background */
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        /* Custom scrollbar for flight tables */
+        .flight-table-container {
+            max-height: 400px; /* Limit height for scrollability */
+            overflow-y: auto;
+            border-radius: 0.5rem; /* Rounded corners for the container */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            background-color: #fff; /* White background for the table */
+        }
+        /* Style for the scrollbar track */
+        .flight-table-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        /* Style for the scrollbar thumb */
+        .flight-table-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        /* Style for the scrollbar thumb on hover */
+        .flight-table-container::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        /* Specific styling for table rows for better visual separation */
+        .flight-table tbody tr:nth-child(even) {
+            background-color: #f8f8f8; /* Light stripe for even rows */
+        }
+        .flight-table tbody tr:hover {
+            background-color: #e2e8f0; /* Highlight on hover */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg py-4">
+        <div class="container flex flex-col md:flex-row justify-between items-center">
+            <h1 class="text-3xl font-bold mb-2 md:mb-0">Los Santos International Airport (LSIA)</h1>
+            <nav class="flex space-x-4">
+                <button class="nav-button bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-lg transition duration-300 shadow-md" data-target="departures">Departures</button>
+                <button class="nav-button bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-lg transition duration-300 shadow-md" data-target="arrivals">Arrivals</button>
+                <button class="nav-button bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-lg transition duration-300 shadow-md" data-target="booking">Book a Flight</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow container mt-8 p-4 bg-white rounded-xl shadow-lg">
+        <!-- Departures Section -->
+        <section id="departures" class="content-section">
+            <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 pb-2">Departures</h2>
+            <div class="flight-table-container">
+                <table class="min-w-full bg-white rounded-lg shadow-inner text-left flight-table">
+                    <thead class="bg-gray-200 sticky top-0">
+                        <tr>
+                            <th class="px-6 py-3 border-b-2 border-gray-300 text-gray-700 font-medium text-sm uppercase tracking-wider rounded-tl-lg">Flight No.</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-300 text-gray-700 font-medium text-sm uppercase tracking-wider">Airline</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-300 text-gray-700 font-medium text-sm uppercase tracking-wider">Destination</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-300 text-gray-700 font-medium text-sm uppercase tracking-wider">Scheduled</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-300 text-gray-700 font-medium text-sm uppercase tracking-wider">Gate</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-300 text-gray-700 font-medium text-sm uppercase tracking-wider rounded-tr-lg">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="departures-table-body" class="divide-y divide-gray-200">
+                        <!-- Departure flights will be loaded here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Arrivals Section -->
+        <section id="arrivals" class="content-section hidden">
+            <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 pb-2">Arrivals</h2>
+            <div class="flight-table-container">
+                <table class="min-w-full bg-white rounded-lg shadow-inner text-left flight-table">
+                    <thead class="bg-gray-200 sticky top-0">
+                        <tr>
+                            <th class="px-6 py-3 border-b-2 border-gray-300 text-gray-700 font-medium text-sm uppercase tracking-wider rounded-tl-lg">Flight No.</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-300 text-gray-700 font-medium text-sm uppercase tracking-wider">Airline</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-300 text-gray-700 font-medium text-sm uppercase tracking-wider">Origin</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-300 text-gray-700 font-medium text-sm uppercase tracking-wider">Scheduled</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-300 text-gray-700 font-medium text-sm uppercase tracking-wider">Terminal</th>
+                            <th class="px-6 py-3 border-b-2 border-gray-300 text-gray-700 font-medium text-sm uppercase tracking-wider rounded-tr-lg">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="arrivals-table-body" class="divide-y divide-gray-200">
+                        <!-- Arrival flights will be loaded here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Booking Section -->
+        <section id="booking" class="content-section hidden">
+            <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 pb-2">Book a Flight</h2>
+            <form id="booking-form" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="origin" class="block text-gray-700 text-sm font-bold mb-2">Origin:</label>
+                        <input type="text" id="origin" name="origin" value="Los Santos (LSIA)" readonly
+                            class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-100 cursor-not-allowed">
+                    </div>
+                    <div>
+                        <label for="destination" class="block text-gray-700 text-sm font-bold mb-2">Destination:</label>
+                        <select id="destination" name="destination" required
+                            class="shadow border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <option value="">Select Destination</option>
+                            <option value="Liberty City (LC)">Liberty City (LC)</option>
+                            <option value="Vice City (VC)">Vice City (VC)</option>
+                            <option value="San Fierro (SF)">San Fierro (SF)</option>
+                            <option value="Las Venturas (LV)">Las Venturas (LV)</option>
+                            <option value="Carcer City (CC)">Carcer City (CC)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="departure-date" class="block text-gray-700 text-sm font-bold mb-2">Departure Date:</label>
+                        <input type="date" id="departure-date" name="departure-date" required
+                            class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div>
+                        <label for="passengers" class="block text-gray-700 text-sm font-bold mb-2">Passengers:</label>
+                        <input type="number" id="passengers" name="passengers" min="1" value="1" required
+                            class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end">
+                    <button type="submit"
+                        class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline transition duration-300 shadow-md">
+                        Search & Book Flight
+                    </button>
+                </div>
+
+                <div id="booking-message" class="mt-4 p-4 rounded-lg text-center hidden"></div>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-8 shadow-inner">
+        <div class="container text-center text-sm">
+            <p>&copy; 2024 Los Santos International Airport. All rights reserved. This is a fictional airport website.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Fictional flight data
+        const flights = {
+            departures: [
+                { flightNo: 'LS101', airline: 'FlyUS', destination: 'Liberty City (LC)', scheduled: '08:00 AM', gate: 'A12', status: 'On Time' },
+                { flightNo: 'LS102', airline: 'Air Herler', destination: 'Vice City (VC)', scheduled: '08:30 AM', gate: 'B05', status: 'Delayed' },
+                { flightNo: 'LS103', airline: 'Adios Air', destination: 'San Fierro (SF)', scheduled: '09:00 AM', gate: 'C01', status: 'Boarding' },
+                { flightNo: 'LS104', airline: 'Jetstream', destination: 'Las Venturas (LV)', scheduled: '09:15 AM', gate: 'A03', status: 'Departed' },
+                { flightNo: 'LS105', airline: 'FlyUS', destination: 'Carcer City (CC)', scheduled: '09:45 AM', gate: 'B10', status: 'On Time' },
+                { flightNo: 'LS106', airline: 'Adios Air', destination: 'Liberty City (LC)', scheduled: '10:00 AM', gate: 'A07', status: 'On Time' },
+                { flightNo: 'LS107', airline: 'Air Herler', destination: 'Vice City (VC)', scheduled: '10:30 AM', gate: 'C04', status: 'Cancelled' },
+                { flightNo: 'LS108', airline: 'Jetstream', destination: 'San Fierro (SF)', scheduled: '11:00 AM', gate: 'B02', status: 'On Time' },
+                { flightNo: 'LS109', airline: 'FlyUS', destination: 'Las Venturas (LV)', scheduled: '11:30 AM', gate: 'A01', status: 'Boarding' },
+                { flightNo: 'LS110', airline: 'Adios Air', destination: 'Carcer City (CC)', scheduled: '12:00 PM', gate: 'C06', status: 'On Time' },
+                { flightNo: 'LS111', airline: 'Air Herler', destination: 'Liberty City (LC)', scheduled: '12:30 PM', gate: 'B08', status: 'On Time' },
+                { flightNo: 'LS112', airline: 'Jetstream', destination: 'Vice City (VC)', scheduled: '01:00 PM', gate: 'A04', status: 'Departed' },
+                { flightNo: 'LS113', airline: 'FlyUS', destination: 'San Fierro (SF)', scheduled: '01:30 PM', gate: 'C02', status: 'On Time' },
+                { flightNo: 'LS114', airline: 'Adios Air', destination: 'Las Venturas (LV)', scheduled: '02:00 PM', gate: 'B06', status: 'Delayed' },
+            ],
+            arrivals: [
+                { flightNo: 'LC201', airline: 'FlyUS', origin: 'Liberty City (LC)', scheduled: '07:45 AM', terminal: '1', status: 'Landed' },
+                { flightNo: 'VC202', airline: 'Air Herler', origin: 'Vice City (VC)', scheduled: '08:15 AM', terminal: '2', status: 'Delayed' },
+                { flightNo: 'SF203', airline: 'Adios Air', origin: 'San Fierro (SF)', scheduled: '08:50 AM', terminal: '1', status: 'On Time' },
+                { flightNo: 'LV204', airline: 'Jetstream', origin: 'Las Venturas (LV)', scheduled: '09:05 AM', terminal: '3', status: 'Expected 09:30 AM' },
+                { flightNo: 'CC205', airline: 'FlyUS', origin: 'Carcer City (CC)', scheduled: '09:30 AM', terminal: '2', status: 'On Time' },
+                { flightNo: 'LC206', airline: 'Adios Air', origin: 'Liberty City (LC)', scheduled: '10:15 AM', terminal: '1', status: 'On Time' },
+                { flightNo: 'VC207', airline: 'Air Herler', origin: 'Vice City (VC)', scheduled: '10:45 AM', terminal: '3', status: 'Landed' },
+                { flightNo: 'SF208', airline: 'Jetstream', origin: 'San Fierro (SF)', scheduled: '11:15 AM', terminal: '2', status: 'Cancelled' },
+                { flightNo: 'LV209', airline: 'FlyUS', origin: 'Las Venturas (LV)', scheduled: '11:45 AM', terminal: '1', status: 'On Time' },
+                { flightNo: 'CC210', airline: 'Adios Air', origin: 'Carcer City (CC)', scheduled: '12:15 PM', terminal: '3', status: 'Expected 12:45 PM' },
+                { flightNo: 'LC211', airline: 'Air Herler', origin: 'Liberty City (LC)', scheduled: '12:45 PM', terminal: '2', status: 'On Time' },
+                { flightNo: 'VC212', airline: 'Jetstream', origin: 'Vice City (VC)', scheduled: '01:15 PM', terminal: '1', status: 'Landed' },
+                { flightNo: 'SF213', airline: 'FlyUS', origin: 'San Fierro (SF)', scheduled: '01:45 PM', terminal: '3', status: 'On Time' },
+                { flightNo: 'LV214', airline: 'Adios Air', origin: 'Las Venturas (LV)', scheduled: '02:15 PM', terminal: '2', status: 'On Time' },
+            ]
+        };
+
+        /**
+         * Populates the flight table with given flight data.
+         * @param {string} tableBodyId - The ID of the tbody element to populate.
+         * @param {Array<Object>} flightData - An array of flight objects.
+         * @param {string} type - 'departure' or 'arrival' to determine columns.
+         */
+        function populateFlightTable(tableBodyId, flightData, type) {
+            const tableBody = document.getElementById(tableBodyId);
+            if (!tableBody) return; // Exit if the table body element doesn't exist
+
+            tableBody.innerHTML = ''; // Clear existing rows
+
+            flightData.forEach(flight => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50'; // Tailwind class for hover effect
+
+                // Determine the appropriate status text color
+                let statusColorClass = 'text-gray-600'; // Default
+                if (flight.status === 'On Time' || flight.status === 'Landed') {
+                    statusColorClass = 'text-green-600 font-semibold';
+                } else if (flight.status === 'Delayed' || flight.status.startsWith('Expected')) {
+                    statusColorClass = 'text-yellow-600 font-semibold';
+                } else if (flight.status === 'Cancelled') {
+                    statusColorClass = 'text-red-600 font-semibold';
+                } else if (flight.status === 'Boarding') {
+                    statusColorClass = 'text-blue-600 font-semibold';
+                } else if (flight.status === 'Departed') {
+                    statusColorClass = 'text-purple-600 font-semibold';
+                }
+
+                if (type === 'departure') {
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${flight.flightNo}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${flight.airline}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${flight.destination}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${flight.scheduled}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${flight.gate}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm ${statusColorClass}">${flight.status}</td>
+                    `;
+                } else if (type === 'arrival') {
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${flight.flightNo}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${flight.airline}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${flight.origin}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${flight.scheduled}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${flight.terminal}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm ${statusColorClass}">${flight.status}</td>
+                    `;
+                }
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Function to show a specific section and hide others
+        function showSection(sectionId) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+
+        // Event listeners for navigation buttons
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                showSection(event.target.dataset.target);
+            });
+        });
+
+        // Handle the booking form submission
+        document.getElementById('booking-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const destination = document.getElementById('destination').value;
+            const departureDate = document.getElementById('departure-date').value;
+            const passengers = document.getElementById('passengers').value;
+            const bookingMessageDiv = document.getElementById('booking-message');
+
+            if (!destination || !departureDate || !passengers) {
+                bookingMessageDiv.className = 'mt-4 p-4 rounded-lg text-center bg-red-100 text-red-700 block';
+                bookingMessageDiv.textContent = 'Please fill in all booking details.';
+                return;
+            }
+
+            // Simulate booking confirmation
+            bookingMessageDiv.className = 'mt-4 p-4 rounded-lg text-center bg-green-100 text-green-700 block';
+            bookingMessageDiv.innerHTML = `
+                <p class="font-bold">Booking Confirmed!</p>
+                <p>Thank you for choosing LSIA.</p>
+                <p>Destination: <span class="font-semibold">${destination}</span></p>
+                <p>Departure Date: <span class="font-semibold">${departureDate}</span></p>
+                <p>Passengers: <span class="font-semibold">${passengers}</span></p>
+                <p class="text-sm mt-2 text-gray-600">Please note: This is a fictional booking and no actual tickets have been issued.</p>
+            `;
+
+            // Optionally clear the form after "booking"
+            this.reset();
+        });
+
+
+        // Initialize the page on load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Populate tables
+            populateFlightTable('departures-table-body', flights.departures, 'departure');
+            populateFlightTable('arrivals-table-body', flights.arrivals, 'arrival');
+
+            // Show departures section by default
+            showSection('departures');
+        });
+    </script>
+</body>
+</html>
