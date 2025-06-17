@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Los Santos International Airport (LSIA)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      color: #142162;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #142162;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #eaeaea;
+    }
+    nav button {
+      background-color: #142162;
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    section {
+      display: none;
+      padding: 20px;
+    }
+    section.active {
+      display: block;
+    }
+    .flight-list {
+      margin-top: 20px;
+    }
+    .flight-list table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .flight-list th, .flight-list td {
+      border: 1px solid #142162;
+      padding: 10px;
+      text-align: left;
+    }
+    .ads {
+      margin-top: 20px;
+    }
+    .ads img {
+      width: 100%;
+      max-width: 300px;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Los Santos International Airport (LSIA)</h1>
+  </header>
+
+  <nav>
+    <button onclick="showTab('main')">Main</button>
+    <button onclick="showTab('pilot-info')">Pilot Information</button>
+    <button onclick="showTab('departures')">Departures</button>
+  </nav>
+
+  <section id="main" class="active">
+    <h2>Welcome to LSIA</h2>
+    <button onclick="showFlights()">Book Flight</button>
+    <div class="flight-list" id="flight-list"></div>
+    <div class="ads">
+      <img src="image1.jpg" alt="Ad 1">
+      <img src="image2.jpg" alt="Ad 2">
+    </div>
+  </section>
+
+  <section id="pilot-info">
+    <h2>Pilot Information</h2>
+    <pre>
+Introduktion
+Dette dokument har til formål at skabe overblik og forståelse for luftfarts protokol i luftrummet over San Andreas
+
+Afsnit 1. Radiokommunikation
+Afsnit 2. Flyveadfærd
+Afsnit 3. Dokumentation
+Afsnit 4. Nødprocedurer
+Afsnit 5. Vigtig info
+Afsnit 6. Appendix
+
+Radio kommunikation
+Alle piloter er pålagt at benytte den officielle luftfartsfrekvens: 16.00 MHz når de befinder sig i luftrummet over staten San Andreas.
+...
+(Hele teksten fortsætter som givet)
+    </pre>
+  </section>
+
+  <section id="departures">
+    <h2>Departures</h2>
+    <p>Flight board under development...</p>
+  </section>
+
+  <script>
+    const locations = [
+      "LSIA (Los Santos International Airport)",
+      "Grapeseed Airfield",
+      "Sandy Shores Airfield",
+      "Liberty City",
+      "Vice City",
+      "North Yankton",
+      "Cayo Perico",
+      "Manchester",
+      "Leonida"
+    ];
+
+    const seatStatuses = [
+      "🟡 Final boarding call",
+      "🔴 Standby only",
+      "🟢 Limited seats",
+      "⚠️ Flight full - waiting list"
+    ];
+
+    const flightTypes = ["Commercial", "Commercial", "Private", "Cargo"];
+
+    function showTab(tabId) {
+      document.querySelectorAll('section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    function getSeededRandom(seed) {
+      let x = Math.sin(seed) * 10000;
+      return x - Math.floor(x);
+    }
+
+    function seededChoice(seed, arr, offset = 0) {
+      const index = Math.floor(getSeededRandom(seed + offset) * arr.length);
+      return arr[index];
+    }
+
+    function showFlights() {
+      const listEl = document.getElementById('flight-list');
+      const now = new Date();
+      const seed = Math.floor(now.setHours(0,0,0,0) / 86400000); // Days since epoch
+      let html = '<table><tr><th>Destination</th><th>Departure Time</th><th>Type</th><th>Status</th></tr>';
+
+      for (let i = 0; i < 8; i++) {
+        const destination = seededChoice(seed, locations, i);
+        const hour = Math.floor(getSeededRandom(seed + i + 1) * 24);
+        const minute = Math.floor(getSeededRandom(seed + i + 2) * 60);
+        const time = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+        const type = seededChoice(seed, flightTypes, i + 20);
+        const status = type === "Commercial" ? seededChoice(seed, seatStatuses, i + 30) : "N/A";
+
+        html += `<tr><td>${destination}</td><td>${time}</td><td>${type}</td><td>${status}</td></tr>`;
+      }
+
+      html += '</table>';
+      listEl.innerHTML = html;
+    }
+  </script>
+</body>
+</html>
