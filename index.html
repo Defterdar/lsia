@@ -61,6 +61,8 @@
             <nav class="flex space-x-4">
                 <button class="nav-button bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-lg transition duration-300 shadow-md active" data-target="flight-info">Flight Information</button>
                 <button class="nav-button bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-lg transition duration-300 shadow-md" data-target="booking">Book a Flight</button>
+                <button class="nav-button bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-lg transition duration-300 shadow-md" data-target="pilot-application">Pilot Application</button>
+                <button class="nav-button bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-lg transition duration-300 shadow-md" data-target="duty-free-shop">Duty-Free Shop</button>
             </nav>
         </div>
     </header>
@@ -214,6 +216,167 @@
 
                 <div id="booking-message" class="mt-4 p-4 rounded-lg text-center hidden"></div>
             </form>
+        </section>
+
+        <!-- Pilot Application Section -->
+        <section id="pilot-application" class="content-section hidden">
+            <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 pb-2">Pilot Application</h2>
+            <div class="bg-blue-50 p-6 rounded-lg shadow-inner mb-6">
+                <p class="text-blue-800 text-lg font-medium">Are you ready to soar the skies of Los Santos? LSIA is always looking for skilled pilots to join our operations, especially for our growing cargo division!</p>
+                <p class="text-blue-700 text-md mt-2">Fill out the form below to apply for a pilot license or express your interest in becoming a cargo pilot for LSIA.</p>
+            </div>
+            <form id="pilot-form" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="pilot-full-name" class="block text-gray-700 text-sm font-bold mb-2">Full Name:</label>
+                        <input type="text" id="pilot-full-name" name="pilot-full-name" placeholder="Jane Doe" required
+                            class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div>
+                        <label for="pilot-email" class="block text-gray-700 text-sm font-bold mb-2">Email Address:</label>
+                        <input type="email" id="pilot-email" name="pilot-email" placeholder="jane.doe@example.com" required
+                            class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="pilot-phone" class="block text-gray-700 text-sm font-bold mb-2">Phone Number:</label>
+                        <input type="tel" id="pilot-phone" name="pilot-phone" placeholder="(123) 456-7890"
+                            class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div>
+                        <label for="pilot-license-number" class="block text-gray-700 text-sm font-bold mb-2">Pilot License Number (Optional):</label>
+                        <input type="text" id="pilot-license-number" name="pilot-license-number" placeholder="e.g., PL-123456"
+                            class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="pilot-license-type" class="block text-gray-700 text-sm font-bold mb-2">Type of License (Highest Held):</label>
+                        <select id="pilot-license-type" name="pilot-license-type" required
+                            class="shadow border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <option value="">Select License Type</option>
+                            <option value="Student Pilot">Student Pilot</option>
+                            <option value="Private Pilot License (PPL)">Private Pilot License (PPL)</option>
+                            <option value="Commercial Pilot License (CPL)">Commercial Pilot License (CPL)</option>
+                            <option value="Airline Transport Pilot (ATP)">Airline Transport Pilot (ATP)</option>
+                            <option value="Flight Instructor (CFI)">Flight Instructor (CFI)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="pilot-flight-hours" class="block text-gray-700 text-sm font-bold mb-2">Total Flight Hours:</label>
+                        <input type="number" id="pilot-flight-hours" name="pilot-flight-hours" min="0" value="0" required
+                            class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" id="cargo-interest" name="cargo-interest" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700 font-bold">I am interested in cargo pilot positions at LSIA</span>
+                    </label>
+                </div>
+
+                <div>
+                    <label for="pilot-message" class="block text-gray-700 text-sm font-bold mb-2">Message / Cover Letter:</label>
+                    <textarea id="pilot-message" name="pilot-message" rows="5" placeholder="Tell us about your experience and why you'd be a great fit for LSIA..."
+                        class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-y"></textarea>
+                </div>
+
+                <div class="flex items-center justify-end">
+                    <button type="submit"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline transition duration-300 shadow-md">
+                        Submit Application
+                    </button>
+                </div>
+
+                <div id="pilot-message-display" class="mt-4 p-4 rounded-lg text-center hidden"></div>
+            </form>
+        </section>
+
+        <!-- Duty-Free Shop Section -->
+        <section id="duty-free-shop" class="content-section hidden">
+            <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b-2 pb-2">LSIA Duty-Free Shop</h2>
+            <div class="bg-purple-50 p-6 rounded-lg shadow-inner mb-6 text-center">
+                <p class="text-purple-800 text-lg font-medium">Welcome to LSIA's Duty-Free Paradise! Indulge in exclusive savings on a wide range of luxury goods, souvenirs, and travel essentials.</p>
+                <p class="text-purple-700 text-md mt-2">To place an order or inquire about our products, call our **toll-free hotline:** <span class="font-bold text-lg text-purple-900">1-800-LSIA-SHOP</span></p>
+                <p class="text-sm text-gray-600 mt-2">All prices are in USD. Items are for fictional purposes only.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Item 1 -->
+                <div class="bg-white p-4 rounded-lg shadow-md border border-gray-200 flex flex-col items-center text-center">
+                    <img src="https://placehold.co/150x150/e0e0e0/333333?text=LSIA+Chronograph" alt="LSIA Chronograph Watch" class="rounded-lg mb-3 shadow-sm">
+                    <h4 class="text-xl font-semibold text-gray-800">Luxury LSIA Chronograph</h4>
+                    <p class="text-gray-600 mb-2">Sophisticated timepiece for the discerning traveler.</p>
+                    <p class="text-blue-600 font-bold text-2xl">$1,299.99</p>
+                </div>
+                <!-- Item 2 -->
+                <div class="bg-white p-4 rounded-lg shadow-md border border-gray-200 flex flex-col items-center text-center">
+                    <img src="https://placehold.co/150x150/e0e0e0/333333?text=Los+Santos+Breeze+Perfume" alt="Los Santos Breeze Perfume" class="rounded-lg mb-3 shadow-sm">
+                    <h4 class="text-xl font-semibold text-gray-800">"Los Santos Breeze" Perfume</h4>
+                    <p class="text-gray-600 mb-2">Exquisite French fragrance, a scent of luxury.</p>
+                    <p class="text-blue-600 font-bold text-2xl">$89.50</p>
+                </div>
+                <!-- Item 3 -->
+                <div class="bg-white p-4 rounded-lg shadow-md border border-gray-200 flex flex-col items-center text-center">
+                    <img src="https://placehold.co/150x150/e0e0e0/333333?text=Gourmet+Chocolates" alt="Gourmet Chocolates" class="rounded-lg mb-3 shadow-sm">
+                    <h4 class="text-xl font-semibold text-gray-800">Grand Theft Chocolates Box</h4>
+                    <p class="text-gray-600 mb-2">Assorted gourmet chocolates from around the world.</p>
+                    <p class="text-blue-600 font-bold text-2xl">$34.99</p>
+                </div>
+                <!-- Item 4 -->
+                <div class="bg-white p-4 rounded-lg shadow-md border border-gray-200 flex flex-col items-center text-center">
+                    <img src="https://placehold.co/150x150/e0e0e0/333333?text=Designer+Sunglasses" alt="Designer Sunglasses" class="rounded-lg mb-3 shadow-sm">
+                    <h4 class="text-xl font-semibold text-gray-800">Vinewood Vision Sunglasses</h4>
+                    <p class="text-gray-600 mb-2">Stylish and protective designer eyewear.</p>
+                    <p class="text-blue-600 font-bold text-2xl">$199.00</p>
+                </div>
+                <!-- Item 5 -->
+                <div class="bg-white p-4 rounded-lg shadow-md border border-gray-200 flex flex-col items-center text-center">
+                    <img src="https://placehold.co/150x150/e0e0e0/333333?text=Leather+Passport+Wallet" alt="Leather Passport Wallet" class="rounded-lg mb-3 shadow-sm">
+                    <h4 class="text-xl font-semibold text-gray-800">LSIA Embossed Leather Wallet</h4>
+                    <p class="text-gray-600 mb-2">Premium genuine leather wallet with LSIA emblem.</p>
+                    <p class="text-blue-600 font-bold text-2xl">$75.00</p>
+                </div>
+                <!-- Item 6 -->
+                <div class="bg-white p-4 rounded-lg shadow-md border border-gray-200 flex flex-col items-center text-center">
+                    <img src="https://placehold.co/150x150/e0e0e0/333333?text=Memory+Foam+Travel+Pillow" alt="Memory Foam Travel Pillow" class="rounded-lg mb-3 shadow-sm">
+                    <h4 class="text-xl font-semibold text-gray-800">Comfort Cloud Travel Pillow</h4>
+                    <p class="text-gray-600 mb-2">Ergonomic memory foam for comfortable long flights.</p>
+                    <p class="text-blue-600 font-bold text-2xl">$29.95</p>
+                </div>
+                <!-- Item 7 -->
+                <div class="bg-white p-4 rounded-lg shadow-md border border-gray-200 flex flex-col items-center text-center">
+                    <img src="https://placehold.co/150x150/e0e0e0/333333?text=Noise+Cancelling+Headphones" alt="Noise Cancelling Headphones" class="rounded-lg mb-3 shadow-sm">
+                    <h4 class="text-xl font-semibold text-gray-800">SilenceFly Noise-Cancelling Headphones</h4>
+                    <p class="text-gray-600 mb-2">Immerse yourself in music, block out the world.</p>
+                    <p class="text-blue-600 font-bold text-2xl">$249.99</p>
+                </div>
+                <!-- Item 8 -->
+                <div class="bg-white p-4 rounded-lg shadow-md border border-gray-200 flex flex-col items-center text-center">
+                    <img src="https://placehold.co/150x150/e0e0e0/333333?text=LSIA+Souvenir+T-Shirt" alt="LSIA Souvenir T-Shirt" class="rounded-lg mb-3 shadow-sm">
+                    <h4 class="text-xl font-semibold text-gray-800">LSIA Branded Souvenir T-Shirt</h4>
+                    <p class="text-gray-600 mb-2">Wear your LSIA pride! Available in various sizes.</p>
+                    <p class="text-blue-600 font-bold text-2xl">$22.00</p>
+                </div>
+                <!-- Item 9 -->
+                <div class="bg-white p-4 rounded-lg shadow-md border border-gray-200 flex flex-col items-center text-center">
+                    <img src="https://placehold.co/150x150/e0e0e0/333333?text=San+Andreas+Wine" alt="San Andreas Wine" class="rounded-lg mb-3 shadow-sm">
+                    <h4 class="text-xl font-semibold text-gray-800">San Andreas Vineyards Reserve</h4>
+                    <p class="text-gray-600 mb-2">Fine local wine, perfect gift or personal indulgence.</p>
+                    <p class="text-blue-600 font-bold text-2xl">$45.00</p>
+                </div>
+                <!-- Item 10 -->
+                <div class="bg-white p-4 rounded-lg shadow-md border border-gray-200 flex flex-col items-center text-center">
+                    <img src="https://placehold.co/150x150/e0e0e0/333333?text=Universal+Travel+Adaptor" alt="Universal Travel Adaptor" class="rounded-lg mb-3 shadow-sm">
+                    <h4 class="text-xl font-semibold text-gray-800">Universal Travel Adaptor</h4>
+                    <p class="text-gray-600 mb-2">Stay connected globally with this essential adaptor.</p>
+                    <p class="text-blue-600 font-bold text-2xl">$18.75</p>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -419,6 +582,45 @@
             // Optionally clear the form after "booking"
             this.reset();
             toggleReturnDate(); // Reset return date visibility as well
+        });
+
+        // Handle the pilot application form submission
+        document.getElementById('pilot-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const fullName = document.getElementById('pilot-full-name').value;
+            const email = document.getElementById('pilot-email').value;
+            const phone = document.getElementById('pilot-phone').value;
+            const licenseNumber = document.getElementById('pilot-license-number').value;
+            const licenseType = document.getElementById('pilot-license-type').value;
+            const flightHours = document.getElementById('pilot-flight-hours').value;
+            const cargoInterest = document.getElementById('cargo-interest').checked;
+            const message = document.getElementById('pilot-message').value;
+            const pilotMessageDiv = document.getElementById('pilot-message-display');
+
+            // Basic validation for pilot application
+            if (!fullName || !email || !licenseType || !flightHours) {
+                pilotMessageDiv.className = 'mt-4 p-4 rounded-lg text-center bg-red-100 text-red-700 block';
+                pilotMessageDiv.textContent = 'Please fill in all required application details (Full Name, Email, License Type, Flight Hours).';
+                return;
+            }
+
+            // Simulate application submission
+            pilotMessageDiv.className = 'mt-4 p-4 rounded-lg text-center bg-green-100 text-green-700 block';
+            pilotMessageDiv.innerHTML = `
+                <p class="font-bold text-xl">Pilot Application Submitted!</p>
+                <p class="mt-2">Thank you for your interest, <span class="font-semibold">${fullName}</span>!</p>
+                <p>We have received your application and will review it shortly. A confirmation email has been sent to <span class="font-semibold">${email}</span>.</p>
+                <div class="mt-4 text-left inline-block">
+                    <p><strong>License Type:</strong> ${licenseType}</p>
+                    <p><strong>Flight Hours:</strong> ${flightHours}</p>
+                    <p><strong>Interested in Cargo:</strong> ${cargoInterest ? 'Yes' : 'No'}</p>
+                </div>
+                <p class="text-sm mt-4 text-gray-600">Please note: This is a fictional application and does not guarantee employment or license issuance.</p>
+            `;
+
+            // Optionally clear the form after submission
+            this.reset();
         });
 
         // Initialize the page on load
